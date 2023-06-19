@@ -6,21 +6,27 @@ public class TowerBulletScript : MonoBehaviour
 {
     private float speed = 10f;
     private float damage = 10f;
-    private Vector3 direction = Vector3.right;
+    private GameObject target = null;
     private float life_time = 3f;
+    private Vector3 direction;
     
-    public void Initialize(float speed, float damage, float time, Vector3 direction)
+    public void Initialize(float speed, float damage, float time, GameObject target)
     {
         this.speed = speed;
         this.damage = damage;
-        this.direction = direction;
+        this.target = target;
         this.life_time = time;
+        direction = this.target.transform.position - transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        life_time -= Time.deltaTime;
         transform.position += direction * (speed * Time.deltaTime);
+
+        if (life_time <= 0) Destroy(gameObject);
+        if (target != null) direction = target.transform.position - transform.position;
     }
     
     private void OnCollisionEnter2D(Collision2D other)

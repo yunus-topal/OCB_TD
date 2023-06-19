@@ -7,8 +7,8 @@ using UnityEngine;
 public class TowerAttackScript : MonoBehaviour
 {
     public GameObject bullet_prefab;
-    private float attack_speed = 1f;
-    private float bullet_speed = 40f;
+    private float attack_speed = 0.1f;
+    private float bullet_speed = 20f;
     private float bullet_life = 3f;
     private float attack_damage = 10f;
     
@@ -48,14 +48,10 @@ public class TowerAttackScript : MonoBehaviour
             if (enemies.Count == 0) yield return null;
             else
             {
-                // TODO : Find the closest enemy and change direction to it.
                 target = enemies.First();
-                var direction = target.transform.position - transform.position;
-                direction = direction.normalized;
-
                 // fire the bullet
-                Instantiate(bullet_prefab, transform.position, Quaternion.identity).GetComponent<TowerBulletScript>().Initialize(bullet_speed, attack_damage, bullet_life, direction);
-                yield return new WaitForSeconds(1f);
+                Instantiate(bullet_prefab, transform.position, Quaternion.identity).GetComponent<TowerBulletScript>().Initialize(bullet_speed, attack_damage, bullet_life, target);
+                yield return new WaitForSeconds(attack_speed);
             }
         }
     }
@@ -76,24 +72,9 @@ public class TowerAttackScript : MonoBehaviour
         }    
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            enemies.Add(other.gameObject);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            RemoveEnemy(other.gameObject);
-        }
-    }
-
     public void RemoveEnemy(GameObject enemy)
     {   
+        if(target == enemy) target = null;
         enemies.Remove(enemy);
     }
 }
