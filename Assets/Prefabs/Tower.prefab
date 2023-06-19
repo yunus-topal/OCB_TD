@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4304697826467346395}
   - component: {fileID: 4304697826467346394}
   - component: {fileID: 4304697826467346392}
-  - component: {fileID: 978028118}
   - component: {fileID: 978028119}
   m_Layer: 6
   m_Name: Tower
@@ -101,22 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet_prefab: {fileID: 6689393493817789429, guid: d5b4f74572aa38346969bdd3677c18ac, type: 3}
   enemies: []
---- !u!58 &978028118
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4304697826467346389}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21133333}
-  serializedVersion: 2
-  m_Radius: 16
 --- !u!50 &978028119
 Rigidbody2D:
   serializedVersion: 4
