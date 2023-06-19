@@ -14,6 +14,7 @@ public class EnemyMovementScript : MonoBehaviour
     private List<GameObject> points = new List<GameObject>(); 
     private int current_point = 0;
     private bool is_moving = false;
+
     private void Start()
     {
         waypoint = GameObject.Find(waypoint_name);
@@ -21,7 +22,6 @@ public class EnemyMovementScript : MonoBehaviour
         {
             GameObject child = waypoint.transform.GetChild(i).gameObject;
             points.Add(child);
-            Debug.Log(child.name);
         }
     }
 
@@ -39,6 +39,21 @@ public class EnemyMovementScript : MonoBehaviour
             StartCoroutine(Run(current_point));
         }
     }
+    
+    private void Finish()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
+        foreach (var tower in towers)
+        {
+            Debug.Log("Removing myself");
+            tower.GetComponent<TowerAttackScript>().RemoveEnemy(gameObject);
+        }
+    }
 
     private IEnumerator Run(int index)
     {
@@ -48,12 +63,29 @@ public class EnemyMovementScript : MonoBehaviour
         
         is_moving = true;
         var runtime = Vector3.Distance(transform.position, target_pos) / speed;
+        
+        // TODO fix movement
         for (var i = 0f; i < runtime; i+= Time.deltaTime)
         {
             transform.position += direction * (speed * Time.deltaTime);
             yield return null;
         }
+        
         current_point++;
         is_moving = false;
+        if (current_point >= points.Count)
+        {
+            Finish();
+        }
+        
+    }
+
+    public void TakeDamage(float hit)
+    {
+        hp -= hit;
+        if (hp <= 0)
+        {
+            Finish();
+        }
     }
 }
