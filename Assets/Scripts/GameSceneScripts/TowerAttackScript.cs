@@ -34,12 +34,14 @@ public class TowerAttackScript : MonoBehaviour
         this.bullet_speed = bullet_speed;
         this.attack_damage = attack_damage;
         this.bullet_life = bullet_life;
-        GetComponent<CircleCollider2D>().radius = attack_range;
+        CircleCollider2D range = GetComponentInChildren<CircleCollider2D>(); 
+        range.radius = attack_range;
         StartCoroutine("AttackEnemy");
     }
 
     private IEnumerator AttackEnemy()
     {
+        Debug.Log("here");
         while (true)
         {
             if (enemies.Count == 0) yield return null;
