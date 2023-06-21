@@ -23,12 +23,21 @@ public class EnemySpawnerScript : MonoBehaviour
     private void SpawnEnemy()
     {
         counter--;
-        if(counter <= 0) {CancelInvoke("SpawnEnemy");}
+        if (counter <= 0)
+        {
+            CancelInvoke("SpawnEnemy");
+            CallGameManager();
+        }
         // generate random number between 0 and enemy_prefab size
         int index = Random.Range(0, enemy_sprites.Length);
         SpriteRenderer enemy_sprite = enemy_prefab.GetComponent<SpriteRenderer>();
         enemy_sprite.sprite = enemy_sprites[index];
         Instantiate(enemy_prefab, transform.position, Quaternion.identity).GetComponent<EnemyMovementScript>().InitializeEnemy(enemy_speed[index], enemy_hp[index], enemy_path);
         
+    }
+
+    private void CallGameManager()
+    {
+        GameObject.FindWithTag("GameController").GetComponent<GameManager>().SetSpawnerFinished(true);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,23 +10,47 @@ public class GameManager : MonoBehaviour
     
     private int waveNumber = 1;
     public TextMeshProUGUI waveNumberText;
+    private bool waveInProgress = false;
+    private bool spawnerFinished = false;
+
+    public void SetSpawnerFinished(bool b)
+    {
+        spawnerFinished = b;
+    }
     
     private GameObject enemySpawner;
     public Material lineMaterial;
     public GameObject optionsParent;
 
     private int currency = 100;
+
+    public int GetCurrency()
+    {
+        return currency;
+    }
+
+    public void SetCurrency(int c)
+    {
+        this.currency = c;
+        currencyText.text = currency.ToString();
+    }
+
+    public void IncreaseCurrency(int c)
+    {
+        currency += c;
+    }
+    
     public GameObject editMenuParent;
     public TextMeshProUGUI currencyText;
 
     private List<GameObject> lineObjects = new();
     private LineRenderer ld;
     
-    public GameObject tower_prefab;
     private void Start()
     {
         // set up wave number
         UpdateWaveNumber(waveNumber);
+        SetCurrency(currency);
         
         enemySpawner = GameObject.Find("EnemySpawner");
         lineObjects.Add(enemySpawner);
@@ -44,6 +69,19 @@ public class GameManager : MonoBehaviour
         ShowOptionsLayout();
     }
 
+    private void Update()
+    {
+        if(spawnerFinished && waveInProgress && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        {
+            waveInProgress = false;
+            spawnerFinished = false;
+            waveNumber++;
+            UpdateWaveNumber(waveNumber);
+            ShowOptionsLayout();
+        }
+    }
+
+    
     private void UpdateWaveNumber(int x)
     {
         waveNumber = x;
@@ -84,12 +122,13 @@ public class GameManager : MonoBehaviour
     
     public void StartGame()
     {
+        Debug.Log("HIDE BUTTONS");
         // hide buttons
         optionsParent.SetActive(false);
-
-        enemySpawner.GetComponent<EnemySpawnerScript>().InitializeEnemySpawner(10);
-        // Instantiate(tower_prefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<TowerAttackScript>().InitializeTower(0.3f, 40f, 0.5f,40f, 3f);
+        editMenuParent.SetActive(false);
         
+        waveInProgress = true;
+        enemySpawner.GetComponent<EnemySpawnerScript>().InitializeEnemySpawner(waveNumber * 10);
     }
     
     public void ExitGame()

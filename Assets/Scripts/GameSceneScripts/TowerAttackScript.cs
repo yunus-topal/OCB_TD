@@ -41,7 +41,6 @@ public class TowerAttackScript : MonoBehaviour
 
     private IEnumerator AttackEnemy()
     {
-        Debug.Log("here");
         while (true)
         {
             if (enemies.Count == 0) yield return null;

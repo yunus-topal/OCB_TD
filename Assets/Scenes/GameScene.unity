@@ -134,9 +134,10 @@ GameObject:
   - component: {fileID: 120029308}
   - component: {fileID: 120029309}
   - component: {fileID: 120029310}
+  - component: {fileID: 120029311}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,7 +174,6 @@ MonoBehaviour:
   optionsParent: {fileID: 928470307}
   editMenuParent: {fileID: 1878176807}
   currencyText: {fileID: 1944085713}
-  tower_prefab: {fileID: 4304697826467346389, guid: 6c7af230e08d87649b43c5e392938a08, type: 3}
 --- !u!120 &120029310
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -273,6 +273,22 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!114 &120029311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120029307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078f8a6306c1efa429bed013482a930d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towers:
+  - {fileID: 4304697826467346389, guid: 8ff7b7d2e85eb9a4c84e8717c626a250, type: 3}
+  - {fileID: 4304697826467346389, guid: 6c7af230e08d87649b43c5e392938a08, type: 3}
+  towerParent: {fileID: 360921927}
 --- !u!1 &122186301
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +372,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 122186304}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 120029311}
+        m_TargetAssemblyTypeName: TowerPlacementScript, Assembly-CSharp
+        m_MethodName: PlaceTower2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &122186304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,7 +506,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 236155313}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 120029311}
+        m_TargetAssemblyTypeName: TowerPlacementScript, Assembly-CSharp
+        m_MethodName: PlaceTower1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &236155313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1137,11 +1177,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Damage: 15
+  m_text: 'Damage: 20
 
-    Speed: 3
+    Speed: 5
 
-    Range: 12
+    Range: 16
 
     PRICE: 40'
   m_isRightToLeft: 0
@@ -1440,13 +1480,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d1c8f51758875074cb1b6aa2d966e5e7, type: 3}
   - {fileID: 21300000, guid: 0b21e82efa1856646becef8aae223e8c, type: 3}
   enemy_hp:
-  - 50
+  - 125
+  - 400
   - 100
-  - 150
-  - 200
+  - 100
   enemy_speed:
-  - 10
   - 15
+  - 5
   - 20
   - 25
 --- !u!1 &885181939
@@ -2485,7 +2525,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Damage: 30
 
-    Speed: 1
+    Speed: 4
 
     Range: 16
 

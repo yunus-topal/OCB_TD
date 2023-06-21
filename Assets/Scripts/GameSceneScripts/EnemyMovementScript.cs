@@ -64,7 +64,6 @@ public class EnemyMovementScript : MonoBehaviour
         is_moving = true;
         var runtime = Vector3.Distance(transform.position, target_pos) / speed;
         
-        // TODO fix movement
         for (var i = 0f; i < runtime; i+= Time.deltaTime)
         {
             transform.position += direction * (speed * Time.deltaTime);
@@ -85,6 +84,8 @@ public class EnemyMovementScript : MonoBehaviour
         hp -= hit;
         if (hp <= 0)
         {
+            // increase currency
+            GameObject.FindWithTag("GameController").GetComponent<GameManager>().IncreaseCurrency(10);
             Finish();
         }
     }
